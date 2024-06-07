@@ -1,0 +1,15 @@
+current_font_size	120
+display_mode	3
+branchlength_label_size	80
+branchlength_display	1
+branchlength_label_rounding	3
+branchlength_label_sci	0
+branchlength_label_color	0
+line_width	10
+ignore_branch_length	1
+align_labels	0
+bootstrap_display	1
+bootstrap_type	2
+bootstrap_symbol_color	(0,0,255)
+bootstrap_label_size	80
+bootstrap_label_rounding	2
