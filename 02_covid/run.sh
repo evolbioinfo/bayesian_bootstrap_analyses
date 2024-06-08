@@ -1,8 +1,10 @@
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
+singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
+rscript="singularity exec r-extended_v4.2.3_2 Rscript"
 
 ## Random selection of 800 sequences among dataset of the paper doi:10.5802/crbiol.29
 mkdir results_random_800
@@ -46,3 +48,5 @@ ML=$($gotree stats -i results_random_800/nextalign.aligned_renamed_masked.fasta.
 echo $(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len)}')
 MLHOMO=$(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len-ali)*100/ali}')
 echo -e "$ALI\t$PARS\t$MLHOMO" >> homoplasies.txt
+
+$rscript script_covid.R
