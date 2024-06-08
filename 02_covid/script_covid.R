@@ -48,7 +48,6 @@ svg("sarscov2_panel_1.svg",width=7.7,height=3)
 ggplot(reftrue2, aes(x=factor(boot),y=support,fill=boot)) + 
   geom_boxplot(outlier.size = 0.5) + 
   stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_dodge(width = 0.75)) +
-  #geom_point(data=reftrue2sup0,aes(factor(boot),y=support),alpha=0.4,color="black",pch = 21, position = position_jitterdodge(jitter.width=0.2,dodge.width = 0.75))+
   facet_grid(cols=vars(nmutstr)) + 
   geom_hline(data=theo_values, aes(yintercept=support,color=boot))+
   scale_fill_manual(values=cbbPalette)+
