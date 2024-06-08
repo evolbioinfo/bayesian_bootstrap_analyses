@@ -1,8 +1,10 @@
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
+singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
+rscript="singularity exec r-extended_v4.2.3_2 Rscript"
 
 git clone git@github.com:evolbioinfo/bdei.git
 nextflow run main.nf --msa bdei/ebola/data/aln.ids.fa --collapse 0.1 --collapseref false --results results
@@ -24,3 +26,5 @@ ML=$($gotree stats -i results/aln.ids_subsamp.phylip_phyml_tree.txt | cut -f 6| 
 HOMO=$(awk -v pars=$PARS -v ali=$ALI 'BEGIN{print (pars-ali)*100/ali}')
 MLHOMO=$(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len-ali)*100/ali}')
 echo -e "$ALI\t$PARS\t$HOMO\t$MLHOMO" >> homoplasies.txt
+
+$rscript script_ebola.R
