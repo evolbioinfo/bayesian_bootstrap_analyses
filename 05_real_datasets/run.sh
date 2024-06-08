@@ -1,9 +1,10 @@
-
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
+singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
+rscript="singularity exec r-extended_v4.2.3_2 Rscript"
 
 wget https://cme.h-its.org/exelixis/material/raxml_adaptive_data.tar.gz
 tar -xzvf raxml_adaptive_data.tar.gz
@@ -106,3 +107,6 @@ do
     fi
 done
 
+
+$rscript script_real_datasets.R
+$rscript script_real_datasets_prots.R
