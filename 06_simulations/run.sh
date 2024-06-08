@@ -1,9 +1,12 @@
 
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
+singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
+
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
+rscript="singularity exec r-extended_v4.2.3_2 Rscript"
 
 $TREE = "../03_ebola/results/aln.ids_subsamp.phylip_phyml_tree.txt"
 $ALIGN = "../03_ebola/results/aln.ids_subsamp.phylip"
@@ -40,3 +43,5 @@ do
         echo -e "$d\t$ALI\t$PARS\t$HOMO\t$MLHOMO" >> homoplasies.txt
     fi
 done
+
+$rscript script_simulations.R
