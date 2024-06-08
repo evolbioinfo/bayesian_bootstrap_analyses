@@ -1,8 +1,10 @@
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
+singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
+rscript="singularity exec r-extended_v4.2.3_2 Rscript"
 
 nextflow run convert.nf --ncbi data/sequences.fasta --gb data/sequence.gb
 
@@ -32,3 +34,5 @@ do
     MLHOMO=$(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len-ali)*100/ali}')
     echo -e "$d\t$ALI\t$PARS\t$MLHOMO" >> homoplasies.txt
 done
+
+$rscript script_rvfv.R
