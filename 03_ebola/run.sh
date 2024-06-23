@@ -28,3 +28,9 @@ MLHOMO=$(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len-ali)*100/ali
 echo -e "$ALI\t$PARS\t$HOMO\t$MLHOMO" >> homoplasies.txt
 
 $rscript script_ebola.R
+
+# Number of min parsimony steps
+$goalign stats char --per-sites -i aln.ids_subsamp.phylip -p | bin/pars.pl
+# Size of the inferred tree (column sumbrlen to multiply by 18996)
+$gotree stats -i reftree_bootsupport.nw
+
