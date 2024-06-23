@@ -107,6 +107,8 @@ do
     fi
 done
 
-
 $rscript script_real_datasets.R
 $rscript script_real_datasets_prots.R
+
+$goalign stats -i alignment_renamed.phy -p
+$goalign dedup -i alignment_renamed.phy -p | goalign stats -p
