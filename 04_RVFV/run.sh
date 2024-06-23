@@ -36,3 +36,13 @@ do
 done
 
 $rscript script_rvfv.R
+
+$goalign stats -i results_S/full_S_dedup_aligned_clean.phylip -p
+$goalign stats -i results_M/full_M_dedup_aligned_clean.phylip -p
+$goalign stats -i results_L/full_L_dedup_aligned_clean.phylip -p
+$gotree stats -i results_S/full_S_dedup_aligned_clean.phylip_phyml_tree.txt
+$gotree stats -i results_M/full_M_dedup_aligned_clean.phylip_phyml_tree.txt
+$gotree stats -i results_L/full_L_dedup_aligned_clean.phylip_phyml_tree.txt
+$goalign stats char --per-sites -i results_S/full_S_dedup_aligned_clean.phylip -p  | bin/pars.pl
+$goalign stats char --per-sites -i results_M/full_M_dedup_aligned_clean.phylip -p  | bin/pars.pl
+$goalign stats char --per-sites -i results_L/full_L_dedup_aligned_clean.phylip -p  | bin/pars.pl
