@@ -119,3 +119,21 @@ c1=tmpref[tmpref$terminal=="false","support"]
 c2=tmpref[tmpref$terminal=="false","supportweight"]
 print(cor(c1,c2))
 print(cor(c1,c2,method = "spearman"))
+
+
+# Branches > 0
+tmpref2 = tmpref[tmpref$nmuts>0,]
+svg(file="Fig_diff_vs_homoplasy_prot.svg",width=7,height=5)
+diffsupport=aggregate(tmpref2$supportweight-tmpref2$support, list(tmpref2$sample,tmpref2$mlhomoplasy), FUN=mean) 
+plot(diffsupport$Group.2,diffsupport$x,pch=20,cex=0.5,col=rgb(0, 0, 255, max = 255),xlab="Protein dataset homoplasy (%)",ylab="Bayesian-Frequentist averaged by dataset",log="x")
+abline(lm(diffsupport$x~log10(diffsupport$Group.2) ))
+dev.off()
+
+# All branches
+tmpref2 = tmpref
+svg(file="Fig_corr_vs_homoplasy_prot.svg",width=7,height=5)
+corrsupport=tmpref2%>%group_by(sample,mlhomoplasy)%>%summarize(cor=cor(supportweight,support))
+plot(corrsupport$mlhomoplasy,corrsupport$cor,log="x",pch=20,cex=0.5,col=rgb(0, 0, 255, max = 255),xlab="Protein dataset homoplasy (%)",ylab="Correlation Bayesian,Frequentist")
+abline(lm(corrsupport$cor[log(corrsupport$mlhomoplasy)>0]~log10(corrsupport$mlhomoplasy[log(corrsupport$mlhomoplasy)>0])))
+dev.off()
+
