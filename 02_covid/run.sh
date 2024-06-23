@@ -50,3 +50,7 @@ MLHOMO=$(awk -v ml=$ML -v len=$LEN -v ali=$ALI 'BEGIN{print (ml*len-ali)*100/ali
 echo -e "$ALI\t$PARS\t$MLHOMO" >> homoplasies.txt
 
 $rscript script_covid.R
+
+# Size of the tree
+$gotree stats -i reftree_bootsupport.nw
+$goalign stats char --per-sites -i nextalign.aligned_renamed_masked.fasta.xz | bin/pars.pl
