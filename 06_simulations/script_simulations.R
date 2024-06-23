@@ -234,7 +234,12 @@ for(c in seq(0,1,0.01)){
     print(paste0("Freq: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Type1:",sprintf("%.3f",type1)))      
     print(paste0("Freq: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Recall:",sprintf("%.3f",power)))
   }
+  if(type1>=0.08 && type1<=0.15){
+    print(paste0("Freq: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Type1:",sprintf("%.3f",type1)))      
+    print(paste0("Freq: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Recall:",sprintf("%.3f",power)))
+  }
   
+    
   #BAYES
   onemut=fullrefscalelen2[fullrefscalelen2$nmuts>=1 & fullrefscalelen2$boot=="Bayesian",c("found","support")]
   # Cutoff
@@ -248,8 +253,11 @@ for(c in seq(0,1,0.01)){
     print(paste0("Bayes: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Type1:",sprintf("%.3f",type1)))      
     print(paste0("Bayes: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Recall:",sprintf("%.3f",power)))
   }
+  if(type1>=0.08 && type1<=0.15){
+    print(paste0("Bayes: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Type1:",sprintf("%.3f",type1)))      
+    print(paste0("Bayes: cut:",c," ","TP:",TP,"|FP:",FP,"|TN:",TN,"|FN:",FN," Recall:",sprintf("%.3f",power)))
+  }
 }
-
 
 ## Branch lengths
 svg("simulated_panel_2_internal.svg",width=5,height=4)

@@ -45,3 +45,23 @@ do
 done
 
 $rscript script_simulations.R
+$rscript script_simulations_nocollapse.R
+
+# Number of branches in common between CorrectedEbola and inferred tree
+$gotree compare trees -i results_1_18996/aln.ids_subsamp.phylip_phyml_tree_scale.nw -c <(gotree collapse length -i results_1_18996/reftree_bootsupport.nw -l 0.000005264266161)
+# Number of minimal parsimony steps
+$goalign stats char --per-sites -i results_1_18996/msa.phylip -p | bin/pars.pl
+# Size of the inferred tree (column sumbrlen to multiply by 18996)
+$gotree stats -i results_1_18996/reftree_bootsupport.nw
+# Size of the X4 inferred tree (column sumbrlen to multiply by 4749)
+$gotree stats -i results_4_4749/reftree_bootsupport.nw
+# Number of minimal parsimony steps
+$goalign stats char --per-sites -i results_4_4749/msa.phylip -p | bin/pars.pl
+# Size of the X16 inferred tree (column sumbrlen to multiply by 1187)
+$gotree stats -i results_16_1187/reftree_bootsupport.nw
+# Number of minimal parsimony steps
+$goalign stats char --per-sites -i results_16_1187/msa.phylip -p | bin/pars.pl
+# Size of the X64 inferred tree (column sumbrlen to multiply by 296)
+$gotree stats -i results_64_296/reftree_bootsupport.nw
+# Number of minimal parsimony steps
+$goalign stats char --per-sites -i results_64_296/msa.phylip -p | bin/pars.p
