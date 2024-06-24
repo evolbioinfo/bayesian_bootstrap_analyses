@@ -9,7 +9,7 @@ It is organized in 6 subdirectories corresponding to the 6 use-cases:
 - 03_ebola: Analysis of the EBOV dataset.
 - 04_RVFV: Analysis of the Rift Valley Fever Virus dataset.
 - 05_real_datasets: Analysis of 300+100 datasets from https://cme.h-its.org/exelixis/material/raxml_adaptive_data.tar.gz .
-- 06_simulations: Aalysis of simulated datasets with different levels of homoplasy.
+- 06_simulations: Analysis of simulated datasets with different levels of homoplasy.
 
 To run the different analyses, a run.sh script is present in each folder, describing the steps. It generally involves running a nextflow workflow.
 
