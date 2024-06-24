@@ -15,4 +15,4 @@ To run the different analyses, a run.sh script is present in each folder, descri
 
 The required software are: Java and Apptainer/Singularity.
 
-The results are given in the release of this repository.
+The results are given in the [release](https://github.com/evolbioinfo/bayesian_bootstrap_analyses/releases/tag/v0.1) page of this repository.
