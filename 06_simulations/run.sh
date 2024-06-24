@@ -1,7 +1,7 @@
 
 singularity pull docker://evolbioinfo/goalign:dev0537492
 singularity pull docker://evolbioinfo/gotree:devb324e73
-singularity pull docker://evolbioinfo/r-extended:v4.2.3_2
+singularity pull docker://evolbioinfo/r-extended:v4.3.3
 
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
