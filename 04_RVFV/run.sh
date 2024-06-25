@@ -4,7 +4,7 @@ singularity pull docker://evolbioinfo/r-extended:v4.3.3
 
 goalign="singularity exec goalign_dev0537492.sif goalign"
 gotree="singularity exec gotree_devb324e73.sif gotree"
-rscript="singularity exec r-extended_v4.2.3_2 Rscript"
+rscript="singularity exec r-extended_v4.3.3 Rscript"
 
 nextflow run convert.nf --ncbi data/sequences.fasta --gb data/sequence.gb
 
