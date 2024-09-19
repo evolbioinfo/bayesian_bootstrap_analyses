@@ -5,6 +5,7 @@ This repository contains the code of the "Bayesian bootstrap" analyses.
 It is organized in 6 subdirectories corresponding to the 6 use-cases:
 
 - 01_simple_example: simple example of high supports of null branches and low support of short branches.
+- 01b_near_zero_branches: New analysis of very short branches based on EBOV dataset
 - 02_covid: Analysis of SARS-CoV-2 dataset.
 - 03_ebola: Analysis of the EBOV dataset.
 - 04_RVFV: Analysis of the Rift Valley Fever Virus dataset.
