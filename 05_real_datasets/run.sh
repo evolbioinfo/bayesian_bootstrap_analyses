@@ -112,3 +112,10 @@ $rscript script_real_datasets_prots.R
 
 $goalign stats -i alignment_renamed.phy -p
 $goalign dedup -i alignment_renamed.phy -p | goalign stats -p
+
+# Number of deduplicated sequences
+$goalign replace -p -s 'N' -n '-' -i results_largest_nuc_10117_0/alignment_renamed.phy | $goalign replace -p -s '?' -n '-' | $goalign replace -p -s 'M' -n '-' | $goalign replace -p -s 'W' -n '-' | $goalign replace -p -s 'R' -n '-' | $goalign replace -p -s 'K' -n '-' | $goalign replace -p -s 'Y' -n '-' > results_largest_nuc_10117_0/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results_random_800/tmp -p -t 10 -m pdist  > results_random_800/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results_random_800/dist results_random_800/names_tokeep.txt

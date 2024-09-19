@@ -1,6 +1,4 @@
-setwd("/Volumes/Evolbioinfo/users/flemoine/projets/2021_10_bboot/bayesian_bootstrap_analyses/results/04_RVFV_results/")
-
-cbbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 library(ggplot2)
 library(forcats)
@@ -48,7 +46,7 @@ ggplot(tmplen,aes(y=sortidx,x=alilen*length))+geom_point(size=0.10)+theme_bw()+x
 dev.off()
 
 theo_values=data.frame(nmutstr=c("1 mutation","2 mutations","1 mutation","2 mutations"),support=c(0.632,0.865,0.905,0.995),boot=c("Frequentist","Frequentist","Bayesian","Bayesian"))
-theo_values$nmutstr=factor(theo_values$nmutstr,levels = c("0 mutation","1 mutation","2 mutations",">=2 mutations"))
+theo_values$nmutstr=factor(theo_values$nmutstr,levels = c("0 mutation","1 mutation","2 mutations",">=3 mutations"))
 
 reftrueweight$boot="Bayesian"
 reftrue$boot="Frequentist"
@@ -60,7 +58,7 @@ reftrue2$nmutstr[reftrue2$nmuts==1]="1 mutation"
 reftrue2$nmutstr[reftrue2$nmuts==2]="2 mutations"
 reftrue2$nmutstr[reftrue2$nmuts>2]=">=3 mutations"
 reftrue2$nmutstr=factor(reftrue2$nmutstr,levels = c("0 mutation","1 mutation","2 mutations",">=3 mutations"))
-reftrue2=reftrue2[reftrue2$boot=="Bayesian" | reftrue2$boot=="Frequentist" | (reftrue2$boot=="NoCollapse" & reftrue2$nmuts==0),]
+reftrue2=reftrue2[reftrue2$boot=="Bayesian" | reftrue2$boot=="Frequentist" | reftrue2$boot=="NoCollapse",]
 reftrue2=reftrue2[reftrue2$topodepth>1,]
 reftrue2sup0=reftrue2[reftrue2$nmuts>0,]
 
@@ -75,8 +73,10 @@ ggplot(reftrue2, aes(x=factor(boot),y=support,fill=boot)) +
   theme_bw()
 dev.off()
 
-c1=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Frequentist","support"]
-c2=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Bayesian","support"]
+c1=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Frequentist" & reftrue2$nmuts>0,"support"]
+c2=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Bayesian" & reftrue2$nmuts>0,"support"]
+c3=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="NoCollapse" & reftrue2$nmuts>0,"support"]
 print(cor(c1,c2))
-print(cor(c1,c2,method = "spearman"))
+print(cor(c3,c2))
+
 

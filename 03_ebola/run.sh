@@ -34,3 +34,9 @@ $goalign stats char --per-sites -i aln.ids_subsamp.phylip -p | bin/pars.pl
 # Size of the inferred tree (column sumbrlen to multiply by 18996)
 $gotree stats -i reftree_bootsupport.nw
 
+# Number of deduplicated sequences
+$goalign replace -s 'N' -n '-' -p -i results/aln.ids_subsamp.phylip | $goalign replace -s '?' -n '-' -p | $goalign replace -s 'M' -n '-' -p | $goalign replace -s 'W' -n '-' -p | $goalign replace -s 'R' -n '-' -p | $goalign replace -s 'K' -n '-' -p | $goalign replace -s 'Y' -n '-'  -p > results/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results/tmp -p -t 10 -m pdist  > results/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results/dist results/names_tokeep.txt

@@ -46,3 +46,23 @@ $gotree stats -i results_L/full_L_dedup_aligned_clean.phylip_phyml_tree.txt
 $goalign stats char --per-sites -i results_S/full_S_dedup_aligned_clean.phylip -p  | bin/pars.pl
 $goalign stats char --per-sites -i results_M/full_M_dedup_aligned_clean.phylip -p  | bin/pars.pl
 $goalign stats char --per-sites -i results_L/full_L_dedup_aligned_clean.phylip -p  | bin/pars.pl
+
+
+# Number of deduplicated sequences
+$goalign replace -p -s 'N' -n '-' -i results/full_L_dedup_aligned_clean.fasta | $goalign replace -p -s '?' -n '-' | $goalign replace -p -s 'M' -n '-' | $goalign replace -p -s 'W' -n '-' | $goalign replace -p -s 'R' -n '-' | $goalign replace -p -s 'K' -n '-' | $goalign replace -p -s 'Y' -n '-' > results/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results/tmp -p -t 10 -m pdist  > results/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results/dist results/names_dedup_L.txt
+
+$goalign replace -p -s 'N' -n '-' -i results/full_M_dedup_aligned_clean.phylip | $goalign -p replace -s '?' -n '-' | $goalign replace -p -s 'M' -n '-' | $goalign replace -p -s 'W' -n '-' | $goalign replace -p -s 'R' -n '-' | $goalign replace -p -s 'K' -n '-' | $goalign replace -p -s 'Y' -n '-' > results/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results/tmp -p -t 10 -m pdist  > results/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results/dist results/names_dedup_M.txt
+
+$goalign replace -p -s 'N' -n '-' -i results/full_S_dedup_aligned_clean.phylip | $goalign -p replace -s '?' -n '-' | $goalign replace -p -s 'M' -n '-' | $goalign replace -p -s 'W' -n '-' | $goalign replace -p -s 'R' -n '-' | $goalign replace -p -s 'K' -n '-' | $goalign replace -p -s 'Y' -n '-' > results/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results/tmp -p -t 10 -m pdist  > results/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results/dist results/names_dedup_S.txt

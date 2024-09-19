@@ -1,4 +1,4 @@
-cbbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#999999", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 library(ggplot2)
 library(forcats)
@@ -47,7 +47,7 @@ ggplot(tmplen,aes(y=sortidx,x=len*length))+geom_point(size=0.10)+theme_bw()+xlim
 dev.off()
 
 theo_values=data.frame(nmutstr=c("1","2","1","2"),support=c(0.632,0.865,0.905,0.995),boot=c("Frequentist","Frequentist","Bayesian","Bayesian"))
-theo_values$nmutstr=factor(theo_values$nmutstr,levels = c("0","1","2",">=2"))
+theo_values$nmutstr=factor(theo_values$nmutstr,levels = c("0","1","2",">=3"))
 
 reftrueweight$boot="Bayesian"
 reftrue$boot="Frequentist"
@@ -57,9 +57,9 @@ reftrue2$nmuts=round(reftrue2$length*len)
 reftrue2$nmutstr[reftrue2$nmuts==0]="0"
 reftrue2$nmutstr[reftrue2$nmuts==1]="1"
 reftrue2$nmutstr[reftrue2$nmuts==2]="2"
-reftrue2$nmutstr[reftrue2$nmuts>2]=">=2"
-reftrue2$nmutstr=factor(reftrue2$nmutstr,levels = c("0","1","2",">=2"))
-reftrue2=reftrue2[reftrue2$boot=="Bayesian" | reftrue2$boot=="Frequentist" | (reftrue2$boot=="FrequentistNoColl" & reftrue2$nmuts==0),]
+reftrue2$nmutstr[reftrue2$nmuts>2]=">=3"
+reftrue2$nmutstr=factor(reftrue2$nmutstr,levels = c("0","1","2",">=3"))
+reftrue2=reftrue2[reftrue2$boot=="Bayesian" | reftrue2$boot=="Frequentist" | reftrue2$boot=="FrequentistNoColl",]
 reftrue2=reftrue2[reftrue2$topodepth>1,]
 reftrue2sup0=reftrue2[reftrue2$nmuts>0,]
 
@@ -67,7 +67,6 @@ svg("ebola_panel_1.svg",width=8,height=3)
 ggplot(reftrue2, aes(x=factor(boot),y=support,fill=boot)) + 
   geom_boxplot(outlier.size = 0.5) + 
   stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_dodge(width = 0.75)) +
-  #geom_point(data=reftrue2sup0,aes(factor(boot),y=support),alpha=0.4,color="black",pch = 21, position = position_jitterdodge(jitter.width=0.2,dodge.width = 0.75))+
   facet_grid(cols=vars(nmutstr)) + 
   geom_hline(data=theo_values, aes(yintercept=support,color=boot))+
   scale_fill_manual(values=cbbPalette)+
@@ -76,8 +75,8 @@ ggplot(reftrue2, aes(x=factor(boot),y=support,fill=boot)) +
 dev.off()
 
 
-c1=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Frequentist","support"]
-c2=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Bayesian","support"]
+c1=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Frequentist" & reftrue2$nmuts>0,"support"]
+c2=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="Bayesian" & reftrue2$nmuts>0,"support"]
+c3=reftrue2[reftrue2$terminal=="false" & reftrue2$boot=="FrequentistNoColl" & reftrue2$nmuts>0,"support"]
 print(cor(c1,c2))
-print(cor(c1,c2,method = "spearman"))
-
+print(cor(c3,c2))

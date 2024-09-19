@@ -54,3 +54,10 @@ $rscript script_covid.R
 # Size of the tree
 $gotree stats -i reftree_bootsupport.nw
 $goalign stats char --per-sites -i nextalign.aligned_renamed_masked.fasta.xz | bin/pars.pl
+
+# Number of deduplicated sequences
+$goalign replace -s 'N' -n '-' -i results_random_800/nextalign.aligned_renamed_masked.fasta.xz | $goalign replace -s '?' -n '-' | $goalign replace -s 'M' -n '-' | $goalign replace -s 'W' -n '-' | $goalign replace -s 'R' -n '-' | $goalign replace -s 'K' -n '-' | $goalign replace -s 'Y' -n '-' > results_random_800/tmp
+# We compute a distance matrix by considering only mutations (gap to character = distance 0)
+$goalign compute distance --gap-mut 0 -i results_random_800/tmp -p -t 10 -m pdist  > results_random_800/dist
+# We keep connected components from this matrix
+$rscript dedup_sequences.R results_random_800/dist results_random_800/names_tokeep.txt
